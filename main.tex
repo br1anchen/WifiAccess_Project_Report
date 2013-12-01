@@ -3,6 +3,9 @@
 % this package is just to generate text for demo-purposes
 \usepackage{blindtext}
 \usepackage{hyperref}
+\usepackage{glossaries}
+\usepackage{graphicx}
+
 
 \title{iPhone Application 
 \newlinetitle for Controlling Wireless Access Point} % The title of your assignement; NB use \newlinetitle to start a newline
@@ -19,7 +22,8 @@
 \DeclareGraphicsExtensions{.pdf,.jpg,.png}
 \graphicspath{{./figs/}}
 
-\loadglsentries{glossary}
+%% \loadglsentries{glossary}
+\include{glossary}
 \makeglossaries
 
 \begin{document}

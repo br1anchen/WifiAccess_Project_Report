@@ -297,7 +297,7 @@
   \begingroup
     \vbox{%
       \vspace*{-1cm}
-      {\noindent\includegraphics[width=6cm]{./figs/ntnu-logo.pdf}\par}\vspace{3cm}
+      {\noindent\includegraphics[width=6cm,natwidth=610,natheight=642]{./figs/ntnu-logo.pdf}\par}\vspace{3cm}
       {\noindent\titlefont\@title\par}\vspace{1.8cm}
       {\noindent\authorfont\@author\par}
     }%
