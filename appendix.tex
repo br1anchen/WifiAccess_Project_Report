@@ -1,0 +1,258 @@
+\appendix
+\addtocontents{toc}{%
+  \protect\vspace{1em}% 
+  \protect\noindent \bfseries \appendixtocname\protect\par
+  \protect\vspace{-.5em}%
+ }
+ \renewcommand{\chaptername}{\appendixname}
+%% include below possible appendices (chapters)
+\begin{appendices}
+\chapter{Appendix}
+\label{chp:appendix}
+\section{RPI Residential Access Point Scripts}
+
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{network interface configuration file}
+  \label{code:network_interface}
+  \begin{verbatim}
+  
+auto lo
+
+iface lo inet loopback
+iface eth0 inet dhcp
+
+allow-hotplug wlan0
+iface wlan0 inet static
+address 10.0.0.1
+netmask 255.255.255.0
+
+post-up /etc/network/if-up.d/iptables_setup.sh
+ \end{verbatim}
+\end{algorithm}
+
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{getClientPermissions function in configserver.py file}
+  \label{code:configserver_py}
+  \begin{verbatim}
+
+    def getClientPermissions(self):
+            #Start polling thread
+            threading.Timer(5.0, self.getClientPermissions).start()
+            
+            print 'Boot Flag: %s' % self.bootFlag
+            
+            httpServ = httplib.HTTPConnection("129.241.200.170", 8080)
+            httpServ.connect()
+            payload = urllib.urlencode(
+	            {'macaddress': util.getMacAddress('eth0'),
+	             'boot_flag' : self.bootFlag})
+            headers = {"Content-type": "application/x-www-form-urlencoded",
+            			"Accept": "text/plain"}
+            request = httpServ.request('POST',
+            			 '/rpi/getclients.php',
+            			  payload ,
+            			  headers)
+            response = httpServ.getresponse()
+            print 'Permissions Polling Request Sent'
+            
+            if response.status == httplib.OK:
+                array = response.read()
+                data = json.loads(array)
+                self.bootFlag = 1;
+                
+                if len(data) == 0:    
+                    print 'No client updates recieved from server'
+                
+                else:
+                    
+                    for str in data:
+                    
+                        client_string = json.dumps(str)
+                        print 'Client from server : %s' % client_string
+                        client_json = json.loads(client_string)
+                        key = client_json ['client']['client_info']['mac']
+                        status = 
+                        client_json ['client']['permissions']['access']['allow']
+	
+                        if status == True:
+                        	self.clientlist.removeClient(key)
+                        	self.clientlist.addClient(client_json)
+                    	else:
+                    		self.clientlist.blockClient(key)				
+
+                        reload_leases_cmd = 
+                        		'bash /etc/reload_dhcp_leases.sh %s' % key 
+                        iptablesapi.executeCommand(reload_leases_cmd)
+                
+            httpServ.close()
+
+ \end{verbatim}
+\end{algorithm}
+
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{main functions in clienthandler.py file}
+  \label{code:clienthandler_py}
+  \begin{verbatim}
+
+    def addClient(self, client_json):      
+        ip = self.ipaddress_pool.pop();
+        client = Client(client_json, ip)
+        
+        #  Add static lease to DHCP lease file (mac, ip, lease time)
+        add_lease_cmd = 
+        	'bash /etc/add_static_lease.sh %s %s 2m' % (client.mac, client.ip)
+        
+        iptablesapi.executeCommand(add_lease_cmd)
+        self.clientlist[client.mac] = client
+
+    def blockClient(self, key):
+
+	self.removeClient(key);
+	
+	block_mac_cmd = 'bash /etc/block_static_lease.sh %s' % key
+	iptablesapi.executeCommand(block_mac_cmd)
+		
+    
+    def removeClient(self, key):
+        
+        if self.clientlist.has_key(key):
+            client = self.clientlist[key]
+            ip = client.ip
+            self.ipaddress_pool.append(ip)
+            
+            #Remove static lease from lease file (mac) 
+            clear_lease_cmd = 
+            'bash /etc/clear_dhcp_lease.sh %s' % client.mac
+            
+            iptablesapi.executeCommand(clear_lease_cmd)
+            #Remove chains and rules from iptables 
+            client.deleteInitialChainAndRules()
+            del self.clientlist[key]
+    	else:
+		clear_lease_cmd = 
+		'bash /etc/clear_dhcp_lease.sh %s' % key
+
+		iptablesapi.executeCommand(clear_lease_cmd)
+    
+    def fillIPaddressPool(self):
+        #Range for authorized subnet
+        for x in xrange(60, 5, -1):
+            ip = '10.0.0.%s' % x
+            self.ipaddress_pool.append(ip)
+
+ \end{verbatim}
+\end{algorithm}
+
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{iptables\_setup.sh}
+  \label{code:iptables_setup}
+  \begin{verbatim}
+  
+#DNS server of unathorized subnet
+DNS1="129.241.200.170"
+
+#IP range of unthorized subnet
+IPunauth="10.0.0.64/27"
+
+#IP range authorized subnet
+IPauth="10.0.0.1/26"
+
+#Flush all tables and delete all custom chains
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t filter -F
+iptables -t filter -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -t raw -F
+iptables -t raw -X
+
+#Default policies for chains in filter table
+iptables -t filter -P INPUT ACCEPT
+iptables -t filter -P FORWARD DROP
+iptables -t filter -P OUTPUT ACCEPT
+
+#NAT
+iptables -A POSTROUTING -t nat -o eth0 -j MASQUERADE
+
+#Allow traffic to and from the management sever
+iptables -A FORWARD -s $IPunauth -d $DNS1 -j ACCEPT
+iptables -A FORWARD -s $DNS1 -d $IPunauth -j ACCEPT
+
+#Direct http traffic to local proxy to obtain client MAC address
+iptables -t nat -A PREROUTING -s $IPunauth 
+-p tcp --dport 80 -j REDIRECT --to-ports 8089
+
+#Redirect localy generated DNS traffic
+iptables -t nat -A OUTPUT -p udp --dport 53 -j DNAT --to $DNS1
+iptables -t nat -A OUTPUT -p tcp --dport 53 -j DNAT --to $DNS1
+ \end{verbatim}
+\end{algorithm}
+
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{main functions in iptablesapi.py}
+  \label{code:iptablesapi}
+  \begin{verbatim}
+  
+#!/usr/bin/python
+import subprocess
+
+def createNewClientChain(chain_name):
+        new_chain_cmd = 'iptables -N %s' % chain_name
+        executeCommand(new_chain_cmd)
+        
+def deleteClientChain(chain_name):
+        delete_chain_cmd = 'iptables -X %s' % chain_name
+        executeCommand(delete_chain_cmd)
+        
+def jumpFromBuiltInChainRule(builtin_chain_name, custom_chain_name, client_ip):
+        jump_rule_cmd1 = 
+        'iptables -I %s -s %s -j %s'  
+        		% (builtin_chain_name, client_ip, custom_chain_name)
+        jump_rule_cmd2 = 
+        'iptables -I %s -d %s -j %s'  
+        		% (builtin_chain_name, client_ip, custom_chain_name)
+        executeCommand(jump_rule_cmd1)
+        executeCommand(jump_rule_cmd2)
+
+def deleteJumpFromBuiltInChainRule(builtin_chain_name, 
+	custom_chain_name, client_ip):
+        #delete_jump_rule_cmd = 
+        'iptables -D %s -m mac --mac-source %s -j %s'  
+        		% (builtin_chain_name, client_mac, custom_chain_name)  
+        delete_jump_rule_cmd1 = 
+        'iptables -D %s -s %s -j %s'  
+        		% (builtin_chain_name, client_ip, custom_chain_name)
+        delete_jump_rule_cmd2 = 
+        'iptables -D %s -d %s -j %s'  
+        		% (builtin_chain_name, client_ip, custom_chain_name)
+        executeCommand(delete_jump_rule_cmd1)
+        executeCommand(delete_jump_rule_cmd2)
+
+def acceptAllTrafficFromClient(chain_name):
+    accept_traffic_cmd = 'iptables -I %s -j ACCEPT' % chain_name
+    delete_drop_rule_cmd = 'iptables -D %s -j DROP' % chain_name
+    executeCommand(accept_traffic_cmd)
+    executeCommand(delete_drop_rule_cmd)
+
+def blockAllTrafficFromClient(chain_name):
+    block_traffic_cmd = 'iptables -I %s -j DROP' % chain_name
+    delete_accept_rule_cmd = 'iptables -D %s -j ACCEPT' % chain_name
+    executeCommand(block_traffic_cmd)
+    executeCommand(delete_accept_rule_cmd)
+
+def initialSetup():
+    setup_cmd = 'sh /etc/network/if-up.d/iptables_setup.sh'
+    executeCommand(setup_cmd)
+
+ \end{verbatim}
+\end{algorithm}
+
+\end{appendices}

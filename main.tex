@@ -55,29 +55,29 @@
 % similarly you may add a separate acknowledgments page
 
 \tableofcontents*
-\cleardoublepage
+\clearpage
 
 %% include if relevant
 \listoffigures
-\cleardoublepage
+\clearpage
 
 %% include if relevant
 \listoftables
-\cleardoublepage
+\clearpage
 
 %% include if relevant
 \listofalgorithms
 \addcontentsline{toc}{chapter}{List of Algorithms}
-\cleardoublepage
+\clearpage
 
 %% include if relevant
 \printglossary[title=List of Symbols, style=long]
-\cleardoublepage
+\clearpage
 \glsaddall[]
 
 %% include if relevant
 \printglossary[title=List of Acronyms,type=\acronymtype] % prints just the list of acronyms
-\cleardoublepage
+\clearpage
 
 \pagenumbering{arabic}
 \pagestyle{ruled}
@@ -94,15 +94,6 @@
 \bibliographystyle{alpha}
 \bibliography{main}
 
-%% Uncomment the following if you have any appendix
-% \appendix
-% \addtocontents{toc}{%
-%  \protect\vspace{1em}% 
-%  \protect\noindent \bfseries \appendixtocname\protect\par
-%  \protect\vspace{-.5em}%
-% }
-% \renewcommand{\chaptername}{\appendixname}
-%% include below possible appendices (chapters)
-
+\include{appendix}
 
 \end{document} 

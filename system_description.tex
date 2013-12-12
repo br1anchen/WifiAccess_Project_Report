@@ -38,3 +38,15 @@
 \par According to the communication between mobile application clients and central management server, the client-server model of this architecture is better for central management server to response of the \gls{http} request and manage the whole service of the system.
 \par More detail about the different component application architecture would be covered in the individual chapter \ref{chp:rpi}, chapter \ref{chp:central_server} and chapter \ref{chp:mobile_app}.
 \par Because there is no running system from previous student master project when this project begin, the performance between previous system and current improvement system would not be compared during this report. However, different improvement of the internet access system would be discussed in the later chapters. And all the improvement function would be only based on the master project report\cite{TorgeirMR}.
+
+\begin{figure}
+	\centering
+    	\includegraphics[width=0.60\textwidth,natwidth=610,natheight=642]{figs/wifi_request_page.png}
+  	\caption{Request Client User Web Request Page}
+  	\label{fig:wifi_request_page}
+\end{figure}
+
+\section{User Case}
+\par Normal user case for this prototype system will be discussed in this section. There are two children in Adam's family. One is 19-year-old daughter Stella and the other is 15-year-old son Aslak. Usually Adam and his wife Eva live with their younger son, they are using the same wireless network based on internet access control system in their house. However, Aslak likes to play online game too much and sleep very late. Then everyday around 2200, Adam will use his WifiAccess Manager application on his iPhone to block his son's computer internet access to make sure Aslak could sleep at the acceptable time everyday. Some weekend, his daughter come back to their house to enjoy the weekend with them. Stella will make her computer and mobile phone connect with the wireless network, then she use the browser to type any domain name in the address bar, she will be redirected to the same central management server to request internet access like the Figure \ref{fig:wifi_request_page}. Then she just type her name for the current device to make request. After she made request, there will be a notification e-mail send to Adam's phone since his administrator user on the WifiAccess Manager application is registered with this e-mail address. Then Adam will use the ios application to approve this request, after that his daughter can connect with the internet this weekend.
+
+\par More working process will be discussed in the Chapter \ref{chp:system_test}. There will be more detail system testing result in that Chapter.
