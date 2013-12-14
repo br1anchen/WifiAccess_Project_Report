@@ -138,6 +138,23 @@
 
 \par The view controller for Wifi Access Manager Master view is more complicated than Wifi Access Manager Login View because it includes a UITableView, swipe gesture function with approve and block request function and automatic updating function in it. Because this view is a table view then this view controller is a sub-view controller  class of UITableViewController. It will have the delegate functions from the UITableViewController to controll the table view. Moreover it will have the delegate functions from third party library,TLSwipeForOptionsCellDelegate, to make the swipe to options function working on cell components in the table view. The loadTableData function in Code Snippet \ref{code:ios_loadtabledata} of Appendix \ref{chp:appendix2}, is the function to get the request lists from the server. It call the helper class 'HttpRequestUtilities' to make the \gls{http} post request to the central management server to get all the requests for the corresponding administrator. Then using the \gls{json} serialization to convert the \gls{json} object array to the objective-c NSMutableArray for displaying in the table view. But since the mechanism of \gls{ios} is to not block the user interface thread all the time, so this load table data will be run as another separate thread, after fetching the data from the server, reloadData function of self.tableView needs to be called to force the table content refresh with the new fetching data. The result after this process is shown in Figure \ref{fig:ios_requests}.
 
+\par The automatic updating function is implemented as a timer repeat in 10 second interval to call the loadTableData function in the application. The implementation code is shown in Code Snippet \ref{code:ios_updatetimer}.
+
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{timer code in WifiAccessManagerMasterViewController.m}
+  \label{code:ios_updatetimer}
+  \begin{verbatim}
+  
+    updateTimer = [NSTimer scheduledTimerWithTimeInterval:10 
+    							target:self 
+    							selector:@selector(loadTableData) 
+    							userInfo:nil 
+    							repeats:YES];
+    [updateTimer fire];
+ \end{verbatim}
+\end{algorithm}
+
 \begin{figure}
 	\centering
 	\begin{minipage}{0.45\textwidth}
