@@ -41,8 +41,9 @@ wmm_enabled=1
  \end{verbatim}
 \end{algorithm}
 
-\subsection{Dnsmasq}
+\subsection{\gls{dhcp}}
 \par For dynamically allocating \gls{ip} address for connected clients with \gls{rpi}, the protocol, \gls{dhcp} \cite{dhcp} is using in this project. \gls{dhcp} is a standardized networking protocol used on \gls{ip} addresses and other information that is needed for internet communication.\gls{dhcp} allows computers and other devices to receive an \gls{ip} address automatically from a central \gls{dhcp} server(\gls{rpi} in this project), reducing the need for a network administrator or a user from having to configure these settings manually. This working process is fit the requirement of prototype project because client users need have a \gls{ip} address to have the access to post internet access request to the central server then wait for the response of it. And the recommended networking protocol using in this case from the \gls{rpi} community is \gls{dhcp}.
+\subsection{Dnsmasq}
 \par In this project, on \gls{rpi} device, the application named dnsmasq \cite{dnsmasq} will be used to provide \gls{dns} forwarder and \gls{dhcp} server. For this prototype project, dnsmasq is a lightweight, easy to configure \gls{dns} forwarder and \gls{dhcp} server. It is designed to provide \gls{dns} and, optionally, \gls{dhcp}, to a small network, like the residential area wireless network in this report case.
 
 \begin{algorithm}[h]

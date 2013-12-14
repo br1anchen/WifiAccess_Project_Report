@@ -7,7 +7,7 @@
  \renewcommand{\chaptername}{\appendixname}
 %% include below possible appendices (chapters)
 \begin{appendices}
-\chapter{Appendix}
+\chapter{Appendix A}
 \label{chp:appendix}
 \section{RPI Residential Access Point Scripts}
 
@@ -251,6 +251,266 @@ def blockAllTrafficFromClient(chain_name):
 def initialSetup():
     setup_cmd = 'sh /etc/network/if-up.d/iptables_setup.sh'
     executeCommand(setup_cmd)
+
+ \end{verbatim}
+\end{algorithm}
+
+\chapter{Appendix B}
+\label{chp:appendix2}
+
+\section{Code Snippets in IOS Mobile Application}
+
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{loadTableData fucntion in WifiAccessManagerMasterViewController.m}
+  \label{code:ios_loadtabledata}
+  \begin{verbatim}
+  
+- (void)loadTableData
+{  
+    [_objects removeAllObjects];
+    NSUserDefaults *userPrefs = [NSUserDefaults standardUserDefaults];
+    NSString *userId = [userPrefs stringForKey:@"Email"];
+    
+    HttpRequestUtilities *httpHelper = [[HttpRequestUtilities alloc] init];
+    NSData *deviceSources = [httpHelper getRequestDevices:userId];
+    
+    if(deviceSources != NULL){
+        id jsonObjects = [NSJSONSerialization 
+        						JSONObjectWithData:deviceSources 
+        						options:NSJSONReadingMutableContainers error:nil];
+        
+        for (NSDictionary *dataDict in jsonObjects) {
+            NSDictionary *client_data = [dataDict objectForKey:@"client"];
+            
+            NSDictionary *clientInfo_data = [client_data 
+            								objectForKey:@"client_info"];
+            NSDictionary *permissionsDic = [client_data 
+            								objectForKey:@"permissions"];
+            
+            NSString *deviceName_data = [clientInfo_data objectForKey:@"name"];
+            NSString *deviceMac_data = [clientInfo_data objectForKey:@"mac"];
+            
+            NSString *deviceRequestResult_data;
+            
+            if(permissionsDic != NULL)
+            {
+                NSDictionary *deviceAccess_data = [permissionsDic 
+                							objectForKey:@"access"];
+                deviceRequestResult_data = [[deviceAccess_data 
+                							objectForKey:@"allow"] 
+                							boolValue] ? @"YES": @"NO";
+            }else
+            {
+                deviceRequestResult_data = @"NULL";
+            }
+            
+            DeviceDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                deviceName_data, deviceName,
+                                deviceMac_data, deviceMac,
+                                deviceRequestResult_data,deviceAccess,
+                                nil];
+            [_objects addObject:DeviceDictionary];
+        }
+    }
+    [self.tableView reloadData];
+}
+
+ \end{verbatim}
+\end{algorithm}
+
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{cellDidSelectApprove function in WifiAccessManagerMasterViewController.m}
+  \label{code:ios_approve}
+  \begin{verbatim}
+  
+-(void)cellDidSelectApprove:(TLSwipeForOptionsCell *)cell {
+    NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
+    
+    NSDictionary *selectedDict = [_objects objectAtIndex:indexPath.row];
+    
+    NSMutableString *clientName;
+    clientName = [NSMutableString stringWithFormat:@"%@",
+            [selectedDict objectForKeyedSubscript:deviceName]];
+    
+    NSMutableString *clientMac;
+    clientMac = [NSMutableString stringWithFormat:@"%@",
+              [selectedDict objectForKey:deviceMac]];
+    
+    HttpRequestUtilities *httpHelper = [[HttpRequestUtilities alloc] init];
+    if([httpHelper postClientAccess:clientName withMac:clientMac andStatus:true]){
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] 
+        							initWithTitle:@"Approve Success"
+                                 delegate:nil
+                                 cancelButtonTitle:nil
+                                 destructiveButtonTitle:@"OK"
+                                 otherButtonTitles:nil];
+        
+        actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+        [actionSheet showInView:self.view];
+    }else{
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] 
+        							initWithTitle:@"Approve Failed"
+                                	delegate:nil
+                                 cancelButtonTitle:nil
+                                 destructiveButtonTitle:@"OK"
+                                 otherButtonTitles:nil];
+        
+        actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
+        [actionSheet showInView:self.view];
+    }
+    
+    [self loadTableData];
+}
+ \end{verbatim}
+\end{algorithm}
+
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{loginRequest in HttpRequestUtilities}
+  \label{code:ios_http_login}
+  \begin{verbatim}
+  
+- (BOOL)loginRequest:(NSString *)email withPassword:(NSString *)pwd
+{
+    
+    NSString *loginUrl = [managerServerUrl 
+    				stringByAppendingString:@"/admin/mobile/loginapp.php"];
+    
+    NSURL *url=[NSURL URLWithString:loginUrl];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+    				cachePolicy:NSURLRequestUseProtocolCachePolicy 
+    				timeoutInterval:120];
+    
+    NSString* postDataString  = [NSString stringWithFormat:@"email=%@&password=%@",
+    								[email base64EncodedString],
+    								[pwd base64EncodedString]];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[postDataString dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" 
+    			forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    NSURLResponse *response;
+    NSError *error;
+    
+    [NSURLConnection sendSynchronousRequest:request 
+    					returningResponse:&response 
+    					error:&error];
+    
+    if(response){
+        return TRUE;
+    }else{
+        return FALSE;
+    }
+}
+
+ \end{verbatim}
+\end{algorithm}
+
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{getRequestDevices in HttpRequestUtilities}
+  \label{code:ios_http_getrequests}
+  \begin{verbatim}
+  
+- (NSData *)getRequestDevices:(NSString *)userId
+{
+    __block NSData *responseData;
+    
+    NSString *getDevicesUrl = [managerServerUrl 
+    			stringByAppendingString:@"/admin/common/getclients.php"];
+    
+    NSURL *url=[NSURL URLWithString:getDevicesUrl];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+     		cachePolicy:NSURLRequestUseProtocolCachePolicy 
+     		timeoutInterval:120];
+    
+    NSString* postDataString  = [NSString stringWithFormat:@"user_id=%@",
+    								[userId base64EncodedString]];
+    
+    
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:[postDataString dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" 
+    			forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Accept"];
+    
+    NSURLResponse *response;
+    NSError *error;
+    
+    responseData = [NSURLConnection sendSynchronousRequest:request 
+    					returningResponse:&response 
+    					error:&error];
+    
+    if(response){
+        return responseData;
+    }else{
+        return NULL;
+    }
+    
+}
+
+ \end{verbatim}
+\end{algorithm}
+
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{postClientAccess in HttpRequestUtilities}
+  \label{code:ios_http_postclient}
+  \begin{verbatim}
+  
+- (BOOL)postClientAccess:(NSString *)clientName 
+		withMac:(NSString *)macAddress andStatus:(BOOL)status
+{
+    
+    NSString *postClientUrl = [managerServerUrl 
+    			stringByAppendingString:@"/admin/common/postclient.php"];
+    
+    NSURL *url=[NSURL URLWithString:postClientUrl];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+     					cachePolicy:NSURLRequestUseProtocolCachePolicy 
+     					timeoutInterval:120];
+    
+    NSString *jsonStr = [NSString 
+    stringWithFormat:@"{\"client\":
+    {\"permissions\":
+    		{\"access\":
+    			{\"allow\":%@}},
+    			\"client_info\":{\"mac\":\"%@\",\"name\":\"%@\"}}}",
+    			status ? @"true":@"false",macAddress,clientName];
+    NSDictionary *postJson = [jsonStr objectFromJSONString];
+    
+    NSError *error;
+    NSData *postdata = [NSJSONSerialization dataWithJSONObject:postJson 
+    						options:0 
+    						error:&error];
+    [request setHTTPBody:postdata];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setHTTPBody:postdata];
+    [request setValue:@"application/x-www-form-urlencoded;charset=UTF-8" 
+    			forHTTPHeaderField:@"Content-Type"];
+    [request setValue:@"application/json" 
+    			forHTTPHeaderField:@"Accept"];
+    
+    NSURLResponse *response;
+    
+    [NSURLConnection sendSynchronousRequest:request 
+    					returningResponse:&response 
+    					error:&error];
+    
+    if(response){
+        return TRUE;
+    }else{
+        return FALSE;
+    }
+}
 
  \end{verbatim}
 \end{algorithm}

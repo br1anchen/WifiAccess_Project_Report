@@ -1,18 +1,25 @@
 \contentsline {algorithm}{\numberline {3.1}{\ignorespaces hostapd configuration file}}{13}{algorithm.3.1}
 \contentsline {algorithm}{\numberline {3.2}{\ignorespaces dnsmasq configuration}}{14}{algorithm.3.2}
-\contentsline {algorithm}{\numberline {3.3}{\ignorespaces dnsmasq dhcp host format}}{14}{algorithm.3.3}
+\contentsline {algorithm}{\numberline {3.3}{\ignorespaces dnsmasq dhcp host format}}{15}{algorithm.3.3}
 \contentsline {algorithm}{\numberline {3.4}{\ignorespaces dnsmasq hosts file}}{15}{algorithm.3.4}
 \contentsline {algorithm}{\numberline {3.5}{\ignorespaces timer method in configserver.py}}{16}{algorithm.3.5}
 \contentsline {algorithm}{\numberline {3.6}{\ignorespaces Original add\_static\_lease.sh}}{18}{algorithm.3.6}
 \contentsline {algorithm}{\numberline {3.7}{\ignorespaces Improved add\_static\_lease.sh}}{18}{algorithm.3.7}
 \contentsline {algorithm}{\numberline {3.8}{\ignorespaces block\_static\_lease.sh}}{19}{algorithm.3.8}
 \contentsline {algorithm}{\numberline {3.9}{\ignorespaces Original reload\_dhcp\_leases.sh}}{19}{algorithm.3.9}
-\contentsline {algorithm}{\numberline {3.10}{\ignorespaces Improved reload\_dhcp\_leases.sh}}{19}{algorithm.3.10}
+\contentsline {algorithm}{\numberline {3.10}{\ignorespaces Improved reload\_dhcp\_leases.sh}}{20}{algorithm.3.10}
 \contentsline {algorithm}{\numberline {3.11}{\ignorespaces clear\_dhcp\_lease.sh}}{20}{algorithm.3.11}
 \contentsline {algorithm}{\numberline {4.1}{\ignorespaces /admin/mobile/loginapp.php}}{24}{algorithm.4.1}
 \contentsline {algorithm}{\numberline {4.2}{\ignorespaces e-mail notification function in requestaccess.php}}{26}{algorithm.4.2}
-\contentsline {algorithm}{\numberline {A.1}{\ignorespaces network interface configuration file}}{35}{algorithm.A.1}
-\contentsline {algorithm}{\numberline {A.2}{\ignorespaces getClientPermissions function in configserver.py file}}{36}{algorithm.A.2}
-\contentsline {algorithm}{\numberline {A.3}{\ignorespaces main functions in clienthandler.py file}}{37}{algorithm.A.3}
-\contentsline {algorithm}{\numberline {A.4}{\ignorespaces iptables\_setup.sh}}{38}{algorithm.A.4}
-\contentsline {algorithm}{\numberline {A.5}{\ignorespaces main functions in iptablesapi.py}}{39}{algorithm.A.5}
+\contentsline {algorithm}{\numberline {5.1}{\ignorespaces userLogin function in WifiAccessManagerLoginViewController.m}}{32}{algorithm.5.1}
+\contentsline {algorithm}{\numberline {5.2}{\ignorespaces login changes on Android Application}}{34}{algorithm.5.2}
+\contentsline {algorithm}{\numberline {A.1}{\ignorespaces network interface configuration file}}{41}{algorithm.A.1}
+\contentsline {algorithm}{\numberline {A.2}{\ignorespaces getClientPermissions function in configserver.py file}}{42}{algorithm.A.2}
+\contentsline {algorithm}{\numberline {A.3}{\ignorespaces main functions in clienthandler.py file}}{43}{algorithm.A.3}
+\contentsline {algorithm}{\numberline {A.4}{\ignorespaces iptables\_setup.sh}}{44}{algorithm.A.4}
+\contentsline {algorithm}{\numberline {A.5}{\ignorespaces main functions in iptablesapi.py}}{45}{algorithm.A.5}
+\contentsline {algorithm}{\numberline {B.1}{\ignorespaces loadTableData fucntion in WifiAccessManagerMasterViewController.m}}{48}{algorithm.B.1}
+\contentsline {algorithm}{\numberline {B.2}{\ignorespaces cellDidSelectApprove function in WifiAccessManagerMasterViewController.m}}{49}{algorithm.B.2}
+\contentsline {algorithm}{\numberline {B.3}{\ignorespaces loginRequest in HttpRequestUtilities}}{50}{algorithm.B.3}
+\contentsline {algorithm}{\numberline {B.4}{\ignorespaces getRequestDevices in HttpRequestUtilities}}{51}{algorithm.B.4}
+\contentsline {algorithm}{\numberline {B.5}{\ignorespaces postClientAccess in HttpRequestUtilities}}{52}{algorithm.B.5}
