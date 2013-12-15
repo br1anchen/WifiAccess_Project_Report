@@ -1,2 +1,33 @@
 \chapter{Future Work}
 \label{chp:future_work}
+
+\par According the work progress of this report project and feedback from tests in the Chapter \ref{chp:system_test}, there are several key features need to be considered as the future work for this current internet access control system because of the limitation of the time on this project. Since there are no tests for these approach to the current system, some of the suggestion of the future could be hard to implement with. However, the considering fields of these approach would be more important than the implementation solutions in this Chapter.
+
+\section{Real-time Request Handle on Central Management Server}
+\par In the current central management serve of the internet access control system, the back-end web service is implemented by \gls{php}. And the running scripts to get the update request status information from the server is using a repeated timer to do \gls{http} post request. These factors make the request status information in the system is not real-time updated and also there will be too many useless \gls{http} request between the \gls{rpi} and central management server. These weakness is not so magnificent when there is only one residential network on the central management server to host service. But the main point to have a central management server is to have the ability to host one service to serve different residential network with the different \gls{rpi} residential network access point, then the work load problem will happen in current system, and also the weakness of the not real-time data will cause much more delay for the end user.
+\par From the research about real-time web service, some web technology framework focus on real-time communication like Node.Js\cite{nodejs} could be a better solution to host web service and \gls{api} for mobile application.Node.js is a platform built on Chrome's JavaScript run-time for easily building fast, scalable network applications. Node.js uses an event-driven, non-blocking I/O model that makes it lightweight and efficient, perfect for data-intensive real-time applications that run across distributed devices.Research(Performance analysis among Node.Js and other web server)\cite{jsconf2010} shows that Node.Js will be faster than apache\&php based web server on handling at lot small dynamic requests(which is the post request from \gls{rpi}), so the performance of both raspberry pi client and mobile application client to pull and push data from server will be better.
+
+\section{Website Filtering Block Solution}
+\par The focus scope of this internet access control system is on residential use and parental control. Then the function of filtering website as white list and black list is necessary for this system. Since the basic concept of current system is to manipulate the \gls{ip} table, then using some specific iptalbes command to block website is a proper solution. For example, the command in Code Snippet \ref{code:iptables_block} tested in the current system is working for blocking website purpose. Then there could be a blocking website mechanism in the current system to let the administrator make a black list for the blocking website. Then every time the running scripts on the \gls{rpi} get this list from the central management server, it will use the same command in Code Snippet \ref{code:iptables_block}
+ to block the websites.
+\begin{algorithm}[h]
+\floatname{algorithm}{Code Snippet}
+  \caption{Block Website Command in iptables}
+  \label{code:iptables_block}
+  \begin{verbatim}
+  iptables -I FORWARD  -m string --string "facebook.com" 
+  					--algo bm --from 1 --to 600 -j REJECT
+ \end{verbatim}
+\end{algorithm}
+
+\par However, blocking sites with iptables rules is not a good idea, mainly because iptables (as most firewalls) deals with the \gls{ip} addresses, and relationship between a site and its \gls{ip} addresses is rather loose.
+
+\par One site can have many \gls{ip} addresses, which can be changed rather frequently. Once iptables rules are created, even if you specify a site's name as part of a rule, the first \gls{ip} address at that moment is used. If site's address changes, your iptables rules will be out of date.One \gls{ip} address can host many sites (and it happens often). This will only get more frequent, because of the \gls{ip} address scarcity. If you block an \gls{ip} address, you block all sites hosted on it.
+
+\par So it is better to use other solution than manipulate the iptables although in current system it is hard to implement because the structure of the current system is based on manipulate the iptables. The other possible solution will be discussed in next section.
+
+\section{Other Solution than Iptables}
+\par The main method using in current system on \gls{rpi} is to manipulate the iptables rules. But it is not safe since the access right is only based on whether the \gls{ip} address is authenticated or not. The other solution to get the same goal of internet access control needs to be considered. For example, installing a transparent \gls{http} proxy will achieve that. There is a project named 'Transparent Proxy with Linux and Squid mini'\cite{transparentproxy} is quite promising for this case.Once the system has a transparent proxy, arbitrary rules can be added to it to block specific sites, it even do not need to use the caching feature of squid.There are other ways to handle site blocking like firewalls, proxies, etc.
+
+\section{Request Security}
+\par As mentioned in Chapter \ref{chp:central_server}, the login mechanism in the system is security \gls{http} request because it is using Base64 encryption for the user login information. However, other \gls{http} requests in the system are still based on string parameter in request which can be weakness of the system security. Then the solution to encrypted these request parameter is also necessary, otherwise to set up all the \gls{http} request based on \gls{https} communication protocol would be another choice.
