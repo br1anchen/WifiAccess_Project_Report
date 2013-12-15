@@ -31,3 +31,7 @@
 
 \section{Request Security}
 \par As mentioned in Chapter \ref{chp:central_server}, the login mechanism in the system is security \gls{http} request because it is using Base64 encryption for the user login information. However, other \gls{http} requests in the system are still based on string parameter in request which can be weakness of the system security. Then the solution to encrypted these request parameter is also necessary, otherwise to set up all the \gls{http} request based on \gls{https} communication protocol would be another choice.
+
+\section{\gls{rpi} system distribution}
+\par The main purpose of the \gls{rpi} in this residential internet access network is to set up and stand alone, no need to be configured later on. If this product need to be focus on commercial market, then these two running scripts on the \gls{rpi} need to start running when \gls{rpi} power up. The solution in this article 'Running A Python Script At Boot Using Cron'\cite{runatboot} could be a good solution for this approach. It use an application called Cron to be a job scheduler that allows the system to perform tasks at defined times or intervals. It is a very powerful tool and useful in lots of situations. \gls{rpi} can use it to run commands or in this case, two Python scripts.
+\par Then the \gls{rpi} in the system just need to power up, all the running scripts will be executed when it boots no need for customer to configure it to start the service.

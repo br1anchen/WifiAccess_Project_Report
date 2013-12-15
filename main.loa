@@ -6,22 +6,22 @@
 \contentsline {algorithm}{\numberline {3.6}{\ignorespaces Original add\_static\_lease.sh}}{18}{algorithm.3.6}
 \contentsline {algorithm}{\numberline {3.7}{\ignorespaces Improved add\_static\_lease.sh}}{18}{algorithm.3.7}
 \contentsline {algorithm}{\numberline {3.8}{\ignorespaces block\_static\_lease.sh}}{19}{algorithm.3.8}
-\contentsline {algorithm}{\numberline {3.9}{\ignorespaces Original reload\_dhcp\_leases.sh}}{19}{algorithm.3.9}
+\contentsline {algorithm}{\numberline {3.9}{\ignorespaces Original reload\_dhcp\_leases.sh}}{20}{algorithm.3.9}
 \contentsline {algorithm}{\numberline {3.10}{\ignorespaces Improved reload\_dhcp\_leases.sh}}{20}{algorithm.3.10}
 \contentsline {algorithm}{\numberline {3.11}{\ignorespaces clear\_dhcp\_lease.sh}}{20}{algorithm.3.11}
-\contentsline {algorithm}{\numberline {4.1}{\ignorespaces /admin/mobile/loginapp.php}}{24}{algorithm.4.1}
-\contentsline {algorithm}{\numberline {4.2}{\ignorespaces e-mail notification function in requestaccess.php}}{26}{algorithm.4.2}
-\contentsline {algorithm}{\numberline {5.1}{\ignorespaces userLogin function in WifiAccessManagerLoginViewController.m}}{32}{algorithm.5.1}
-\contentsline {algorithm}{\numberline {5.2}{\ignorespaces timer code in WifiAccessManagerMasterViewController.m}}{33}{algorithm.5.2}
-\contentsline {algorithm}{\numberline {5.3}{\ignorespaces login changes on Android Application}}{35}{algorithm.5.3}
-\contentsline {algorithm}{\numberline {7.1}{\ignorespaces Block Website Command in iptables}}{44}{algorithm.7.1}
-\contentsline {algorithm}{\numberline {A.1}{\ignorespaces network interface configuration file}}{53}{algorithm.A.1}
-\contentsline {algorithm}{\numberline {A.2}{\ignorespaces getClientPermissions function in configserver.py file}}{54}{algorithm.A.2}
-\contentsline {algorithm}{\numberline {A.3}{\ignorespaces main functions in clienthandler.py file}}{55}{algorithm.A.3}
-\contentsline {algorithm}{\numberline {A.4}{\ignorespaces iptables\_setup.sh}}{56}{algorithm.A.4}
-\contentsline {algorithm}{\numberline {A.5}{\ignorespaces main functions in iptablesapi.py}}{57}{algorithm.A.5}
-\contentsline {algorithm}{\numberline {B.1}{\ignorespaces loadTableData fucntion in WifiAccessManagerMasterViewController.m}}{60}{algorithm.B.1}
-\contentsline {algorithm}{\numberline {B.2}{\ignorespaces cellDidSelectApprove function in WifiAccessManagerMasterViewController.m}}{61}{algorithm.B.2}
-\contentsline {algorithm}{\numberline {B.3}{\ignorespaces loginRequest in HttpRequestUtilities}}{62}{algorithm.B.3}
-\contentsline {algorithm}{\numberline {B.4}{\ignorespaces getRequestDevices in HttpRequestUtilities}}{63}{algorithm.B.4}
-\contentsline {algorithm}{\numberline {B.5}{\ignorespaces postClientAccess in HttpRequestUtilities}}{64}{algorithm.B.5}
+\contentsline {algorithm}{\numberline {4.1}{\ignorespaces /admin/mobile/loginapp.php}}{26}{algorithm.4.1}
+\contentsline {algorithm}{\numberline {4.2}{\ignorespaces e-mail notification function in requestaccess.php}}{28}{algorithm.4.2}
+\contentsline {algorithm}{\numberline {5.1}{\ignorespaces userLogin function in WifiAccessManagerLoginViewController.m}}{34}{algorithm.5.1}
+\contentsline {algorithm}{\numberline {5.2}{\ignorespaces timer code in WifiAccessManagerMasterViewController.m}}{35}{algorithm.5.2}
+\contentsline {algorithm}{\numberline {5.3}{\ignorespaces login changes on Android Application}}{37}{algorithm.5.3}
+\contentsline {algorithm}{\numberline {7.1}{\ignorespaces Block Website Command in iptables}}{46}{algorithm.7.1}
+\contentsline {algorithm}{\numberline {A.1}{\ignorespaces network interface configuration file}}{55}{algorithm.A.1}
+\contentsline {algorithm}{\numberline {A.2}{\ignorespaces getClientPermissions function in configserver.py file}}{56}{algorithm.A.2}
+\contentsline {algorithm}{\numberline {A.3}{\ignorespaces main functions in clienthandler.py file}}{57}{algorithm.A.3}
+\contentsline {algorithm}{\numberline {A.4}{\ignorespaces iptables\_setup.sh}}{58}{algorithm.A.4}
+\contentsline {algorithm}{\numberline {A.5}{\ignorespaces main functions in iptablesapi.py}}{59}{algorithm.A.5}
+\contentsline {algorithm}{\numberline {B.1}{\ignorespaces loadTableData fucntion in WifiAccessManagerMasterViewController.m}}{62}{algorithm.B.1}
+\contentsline {algorithm}{\numberline {B.2}{\ignorespaces cellDidSelectApprove function in WifiAccessManagerMasterViewController.m}}{63}{algorithm.B.2}
+\contentsline {algorithm}{\numberline {B.3}{\ignorespaces loginRequest in HttpRequestUtilities}}{64}{algorithm.B.3}
+\contentsline {algorithm}{\numberline {B.4}{\ignorespaces getRequestDevices in HttpRequestUtilities}}{65}{algorithm.B.4}
+\contentsline {algorithm}{\numberline {B.5}{\ignorespaces postClientAccess in HttpRequestUtilities}}{66}{algorithm.B.5}
