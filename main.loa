@@ -2,13 +2,13 @@
 \contentsline {algorithm}{\numberline {3.2}{\ignorespaces dnsmasq configuration}}{14}{algorithm.3.2}
 \contentsline {algorithm}{\numberline {3.3}{\ignorespaces dnsmasq dhcp host format}}{15}{algorithm.3.3}
 \contentsline {algorithm}{\numberline {3.4}{\ignorespaces dnsmasq hosts file}}{15}{algorithm.3.4}
-\contentsline {algorithm}{\numberline {3.5}{\ignorespaces timer method in configserver.py}}{16}{algorithm.3.5}
+\contentsline {algorithm}{\numberline {3.5}{\ignorespaces timer method in configserver.py}}{17}{algorithm.3.5}
 \contentsline {algorithm}{\numberline {3.6}{\ignorespaces Original add\_static\_lease.sh}}{18}{algorithm.3.6}
-\contentsline {algorithm}{\numberline {3.7}{\ignorespaces Improved add\_static\_lease.sh}}{18}{algorithm.3.7}
+\contentsline {algorithm}{\numberline {3.7}{\ignorespaces Improved add\_static\_lease.sh}}{19}{algorithm.3.7}
 \contentsline {algorithm}{\numberline {3.8}{\ignorespaces block\_static\_lease.sh}}{19}{algorithm.3.8}
 \contentsline {algorithm}{\numberline {3.9}{\ignorespaces Original reload\_dhcp\_leases.sh}}{20}{algorithm.3.9}
 \contentsline {algorithm}{\numberline {3.10}{\ignorespaces Improved reload\_dhcp\_leases.sh}}{20}{algorithm.3.10}
-\contentsline {algorithm}{\numberline {3.11}{\ignorespaces clear\_dhcp\_lease.sh}}{20}{algorithm.3.11}
+\contentsline {algorithm}{\numberline {3.11}{\ignorespaces clear\_dhcp\_lease.sh}}{21}{algorithm.3.11}
 \contentsline {algorithm}{\numberline {4.1}{\ignorespaces /admin/mobile/loginapp.php}}{26}{algorithm.4.1}
 \contentsline {algorithm}{\numberline {4.2}{\ignorespaces e-mail notification function in requestaccess.php}}{28}{algorithm.4.2}
 \contentsline {algorithm}{\numberline {5.1}{\ignorespaces userLogin function in WifiAccessManagerLoginViewController.m}}{34}{algorithm.5.1}
